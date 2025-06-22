@@ -69,8 +69,8 @@ export default function ProductDetail() {
     media.push({ type: 'video', url: product.videoUrl, thumbnailUrl: product.imageUrls ? product.imageUrls[0] : product.image });
   }
 
-  const discountPercentage = product.price
-    ? Math.round(((product.price - product.originalPrice) / product.price) * 100)
+  const discountPercentage = product.originalPrice
+    ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
   // Related products: filter by same category, exclude self
@@ -174,7 +174,7 @@ export default function ProductDetail() {
                     ₹{product.originalPrice}
                   </span>
                   <span className="bg-red-100 text-red-800 px-2 py-1 rounded text-sm font-medium">
-                    Save ₹{(product.price - product.originalPrice).toFixed(2)} ({discountPercentage}%)
+                    Save ₹{(product.originalPrice - product.price).toFixed(2)} ({discountPercentage}%)
                   </span>
                 </>
               )}

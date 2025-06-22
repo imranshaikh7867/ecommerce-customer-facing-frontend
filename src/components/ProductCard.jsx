@@ -7,7 +7,7 @@ export default function ProductCard({ product }) {
   
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const discountPercentage = product.originalPrice
+ const discountPercentage = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
 
@@ -51,7 +51,7 @@ export default function ProductCard({ product }) {
               <span className="bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded-full shadow">NEW</span>
             )}
             {discountPercentage > 0 && (
-              <span className="bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-full shadow">-{discountPercentage}%</span>
+              <span className="bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-full shadow">{discountPercentage}%</span>
             )}
           </div>
           {/* Add to Cart Button (hover) */}

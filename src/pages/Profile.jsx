@@ -26,7 +26,7 @@ export default function Profile() {
 
     // Company Info
     const company = {
-      name: "ShopEase",
+      name: "ShopClassico",
       address: "Kokni Pada Kurar Village, Malad East, Mumbai 400097",
       phone: "+91 9045193002 / +91 7977133658",
       email: "talhamalik4311@gmail.com / 27imranshaikh05@gmail.com",

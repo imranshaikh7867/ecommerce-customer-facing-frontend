@@ -68,7 +68,7 @@ export default function Header() {
             <div className="bg-primary-600 text-white p-2 rounded-lg">
               <ShoppingCart className="h-6 w-6" />
             </div>
-            <span className="text-xl font-bold text-gray-900">ShopEase</span>
+            <span className="text-xl font-bold text-gray-900">ShopClassico</span>
           </Link>
 
           {/* Desktop Navigation */}

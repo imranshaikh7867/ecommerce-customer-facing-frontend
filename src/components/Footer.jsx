@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">ShopEase</h3>
+            <h3 className="text-lg font-semibold mb-4">ShopClassico</h3>
             <p className="text-gray-400 mb-4">
               Your one-stop destination for quality products at unbeatable prices. 
               Shop with confidence and enjoy fast, reliable delivery.
@@ -85,7 +85,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400">
-            © 2024 ShopEase. All rights reserved. | Privacy Policy | Terms of Service
+            © 2024 ShopClassico. All rights reserved. | Privacy Policy | Terms of Service
           </p>
         </div>
       </div>
