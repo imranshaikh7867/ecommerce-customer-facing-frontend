@@ -13,6 +13,7 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('Specification');
   const [showImageModal, setShowImageModal] = useState(false);
+  const [selectedSize, setSelectedSize] = useState('');
 
   useEffect(() => {
     if (products && Array.isArray(products)) {
@@ -217,12 +218,37 @@ export default function ProductDetail() {
                 </div>
               </div>
 
+              {/* Size Selection (for clothes/shoes) */}
+              {(product.category === 'clothes' || product.category === 'shoes') && Array.isArray(product.sizes) && product.sizes.length > 0 && (
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">Select Size:</label>
+                  <div className="flex flex-wrap gap-2">
+                    {product.sizes.map((size) => (
+                      <button
+                        key={size}
+                        type="button"
+                        onClick={() => setSelectedSize(size)}
+                        className={`px-4 py-2 rounded border font-medium transition-colors ${selectedSize === size ? 'bg-primary-600 text-white border-primary-600' : 'bg-white text-gray-900 border-gray-300 hover:bg-gray-100'}`}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                  {selectedSize === '' && (
+                    <p className="text-xs text-red-500">Please select a size</p>
+                  )}
+                </div>
+              )}
+
               <div className="flex space-x-4">
                 <button
                   onClick={() => {
-                    // if (!product.inStock) return;
+                    if ((product.category === 'clothes' || product.category === 'shoes') && (!selectedSize || selectedSize === '')) {
+                      alert('Please select a size.');
+                      return;
+                    }
                     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-                    const existingIndex = cart.findIndex(item => item.id === (product._id || product.id));
+                    const existingIndex = cart.findIndex(item => item.id === (product._id || product.id) && (item.size || '') === (selectedSize || ''));
                     if (existingIndex !== -1) {
                       cart[existingIndex].quantity += quantity;
                     } else {
@@ -233,6 +259,8 @@ export default function ProductDetail() {
                         image: product.imageUrls ? product.imageUrls[0] : product.image,
                         price: product.price,
                         quantity: quantity,
+                        ...(product.category === 'clothes' || product.category === 'shoes' ? { size: selectedSize } : {}),
+                        category: product.category,
                       });
                     }
                     localStorage.setItem('cart', JSON.stringify(cart));
