@@ -202,15 +202,18 @@ export default function Checkout() {
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Order Summary</h2>
               <div className="space-y-3 mb-6">
                 {cart.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between">
+                  <div key={item.id + (item.size || '')} className="flex items-center justify-between py-2">
                     <div className="flex items-center space-x-3">
-                      <img src={item.image} alt={item.name} className="w-10 h-10 object-cover rounded" />
+                      <img src={item.image} alt={item.name} className="w-12 h-12 object-cover rounded" />
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{item.name}</p>
-                        <p className="text-xs text-gray-600">Qty: {item.quantity}</p>
+                        <div className="font-medium text-gray-900">{item.name}</div>
+                        <div className="text-xs text-gray-600">Qty: {item.quantity}</div>
+                        {['clothes', 'shoes'].includes(item.category) && item.size && (
+                          <div className="text-xs text-gray-500">Size: <span className="font-semibold">{item.size}</span></div>
+                        )}
                       </div>
                     </div>
-                    <p className="text-sm font-medium text-gray-900">₹{(item.price * item.quantity).toFixed(2)}</p>
+                    <div className="text-sm font-medium text-gray-900">₹{(item.price * item.quantity).toFixed(2)}</div>
                   </div>
                 ))}
               </div>

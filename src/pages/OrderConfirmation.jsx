@@ -56,7 +56,7 @@ export default function OrderConfirmation() {
     order.items.forEach((item, index) => {
       const itemData = [
         index + 1,
-        item.name,
+        item.name + (['clothes', 'shoes'].includes(item.category) && item.size ? ` (Size: ${item.size})` : ''),
         item.quantity,
         `₹${item.price.toFixed(2)}`,
         `₹${(item.price * item.quantity).toFixed(2)}`
@@ -153,6 +153,9 @@ export default function OrderConfirmation() {
                   <div>
                     <div className="font-medium text-gray-900">{item.name}</div>
                     <div className="text-xs text-gray-600">Qty: {item.quantity}</div>
+                    {['clothes', 'shoes'].includes(item.category) && item.size && (
+                      <div className="text-xs text-gray-500">Size: <span className="font-semibold">{item.size}</span></div>
+                    )}
                   </div>
                 </div>
                 <div className="text-sm font-medium text-gray-900">₹{(item.price * item.quantity).toFixed(2)}</div>
