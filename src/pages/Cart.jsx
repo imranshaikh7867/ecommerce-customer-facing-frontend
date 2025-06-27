@@ -12,21 +12,21 @@ export default function Cart() {
     setCart(storedCart);
   }, []);
 
-  const updateQuantity = (id, newQuantity) => {
+  const updateQuantity = (id, newQuantity, size) => {
     let updatedCart;
     if (newQuantity === 0) {
-      updatedCart = cart.filter(item => item.id !== id);
+      updatedCart = cart.filter(item => !(item.id === id && (item.size || '') === (size || '')));
     } else {
       updatedCart = cart.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
+        item.id === id && (item.size || '') === (size || '') ? { ...item, quantity: newQuantity } : item
       );
     }
     setCart(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
-  const removeFromCart = (id) => {
-    const updatedCart = cart.filter(item => item.id !== id);
+  const removeFromCart = (id, size) => {
+    const updatedCart = cart.filter(item => !(item.id === id && (item.size || '') === (size || '')));
     setCart(updatedCart);
     localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
@@ -78,7 +78,7 @@ export default function Cart() {
               </div>
               <div className="divide-y">
                 {cart.map((item) => (
-                  <div key={item.id} className="p-6 flex items-center space-x-4">
+                  <div key={item.id + (item.size || '')} className="p-6 flex items-center space-x-4">
                     <div className="w-20 h-20 bg-gray-200 rounded-lg overflow-hidden">
                       <img
                         src={item.image}
@@ -94,20 +94,23 @@ export default function Cart() {
                         {item.name}
                       </Link>
                       <p className="text-sm text-gray-600">{item.brand}</p>
+                      {['clothes', 'shoes'].includes(item.category) && item.size && (
+                        <p className="text-sm text-gray-500">Size: <span className="font-semibold">{item.size}</span></p>
+                      )}
                       <p className="text-lg font-semibold text-gray-900 mt-1">
                        ₹{item.price.toFixed(2)}
                       </p>
                     </div>
                     <div className="flex items-center space-x-3">
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        onClick={() => updateQuantity(item.id, item.quantity - 1, item.size)}
                         className="p-1 hover:bg-gray-100 rounded"
                       >
                         <Minus className="h-4 w-4" />
                       </button>
                       <span className="w-8 text-center font-medium">{item.quantity}</span>
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        onClick={() => updateQuantity(item.id, item.quantity + 1, item.size)}
                         className="p-1 hover:bg-gray-100 rounded"
                       >
                         <Plus className="h-4 w-4" />
@@ -118,7 +121,7 @@ export default function Cart() {
                        ₹{(item.price * item.quantity).toFixed(2)}
                       </p>
                       <button
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeFromCart(item.id, item.size)}
                         className="text-red-600 hover:text-red-700 mt-2"
                       >
                         <Trash2 className="h-4 w-4" />
